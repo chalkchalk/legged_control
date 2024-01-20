@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(legged_gazebo)
 
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 ## Find catkin macros and libraries
@@ -47,13 +48,12 @@ target_link_libraries(legged_hw_sim
         ${catkin_LIBRARIES}
         ${GAZEBO_LIBRARIES}
         )
-
 #########################
 ###   CLANG TOOLING   ###
 #########################
 find_package(cmake_clang_tools QUIET)
 if (cmake_clang_tools_FOUND)
-    message(STATUS "Run clang tooling for target legged_hw_sim")
+    message("Run clang tooling for target legged_hw_sim")
     add_clang_tooling(
             TARGETS legged_hw_sim
             SOURCE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -65,6 +65,12 @@ endif (cmake_clang_tools_FOUND)
 #############
 ## Install ##
 #############
+
+# message( "CATKIN_PACKAGE_SHARE_DESTINATION: ${CATKIN_PACKAGE_SHARE_DESTINATION}")
+# message( "CATKIN_PACKAGE_LIB_DESTINATION: ${CATKIN_PACKAGE_LIB_DESTINATION}")
+# message( "CATKIN_PACKAGE_BIN_DESTINATION: ${CATKIN_PACKAGE_BIN_DESTINATION}")
+# message( "CATKIN_PACKAGE_INCLUDE_DESTINATION: ${CATKIN_PACKAGE_INCLUDE_DESTINATION}")
+
 
 install(TARGETS legged_hw_sim
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

@@ -228,6 +228,7 @@ void LeggedController::setupMrt() {
   mpcTimer_.reset();
 
   controllerRunning_ = true;
+  ros::Rate simRate(leggedInterface_->mpcSettings().mrtDesiredFrequency_);
   mpcThread_ = std::thread([&]() {
     while (controllerRunning_) {
       try {
