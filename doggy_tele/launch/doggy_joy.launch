@@ -1,0 +1,5 @@
+<launch>
+    <arg name="joy_type" default="real"/>
+    <rosparam file="$(find doggy_tele)/config/doggy_joy_$(arg joy_type).yaml" command="load"/>
+    <node pkg="doggy_tele" type="joy_to_cmd" name="joy_to_cmd" output="screen"/>
+</launch>

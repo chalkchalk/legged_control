@@ -5,7 +5,6 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /RobotModel1
-        - /RobotModel1/Status1
         - /RobotModel1/Links1
         - /TF1
         - /TF1/Frames1
@@ -168,20 +167,81 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: true
-      Marker Alpha: 1
-      Marker Scale: 1
+        LF_FOOT:
+          Value: true
+        LF_calf:
+          Value: true
+        LF_hip:
+          Value: true
+        LF_thigh:
+          Value: true
+        LH_FOOT:
+          Value: true
+        LH_calf:
+          Value: true
+        LH_hip:
+          Value: true
+        LH_thigh:
+          Value: true
+        RF_FOOT:
+          Value: true
+        RF_calf:
+          Value: true
+        RF_hip:
+          Value: true
+        RF_thigh:
+          Value: true
+        RH_FOOT:
+          Value: true
+        RH_calf:
+          Value: true
+        RH_hip:
+          Value: true
+        RH_thigh:
+          Value: true
+        base:
+          Value: true
+        odom:
+          Value: true
+        unitree_imu:
+          Value: true
+      Marker Alpha: 0.5
+      Marker Scale: 0.30000001192092896
       Name: TF
-      Show Arrows: true
-      Show Axes: false
+      Show Arrows: false
+      Show Axes: true
       Show Names: false
       Tree:
-        {}
+        odom:
+          base:
+            LF_hip:
+              LF_thigh:
+                LF_calf:
+                  LF_FOOT:
+                    {}
+            LH_hip:
+              LH_thigh:
+                LH_calf:
+                  LH_FOOT:
+                    {}
+            RF_hip:
+              RF_thigh:
+                RF_calf:
+                  RF_FOOT:
+                    {}
+            RH_hip:
+              RH_thigh:
+                RH_calf:
+                  RH_FOOT:
+                    {}
+            unitree_imu:
+              {}
       Update Interval: 0
-      Value: false
+      Value: true
     - Class: rviz/MarkerArray
       Enabled: true
       Marker Topic: /legged_robot/optimizedStateTrajectory
@@ -189,6 +249,7 @@ Visualization Manager:
       Namespaces:
         CoM Trajectory: true
         EE Trajectories: true
+        Future footholds: true
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -245,7 +306,7 @@ Visualization Manager:
           Marker Topic: /legged_robot/desiredBaseTrajectory
           Name: Target Base Trajectory
           Namespaces:
-            {}
+            "": true
           Queue Size: 100
           Value: true
       Enabled: true
@@ -296,8 +357,8 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz/Orbit
-      Distance: 1.8979061841964722
+      Class: rviz/XYOrbit
+      Distance: 2.7850098609924316
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -313,9 +374,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8353977203369141
-      Target Frame: <Fixed Frame>
-      Yaw: 1.4903979301452637
+      Pitch: 0.2803982198238373
+      Target Frame: odom
+      Yaw: 0.7203982472419739
     Saved: ~
 Window Geometry:
   Displays:

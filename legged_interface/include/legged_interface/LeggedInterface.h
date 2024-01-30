@@ -23,6 +23,67 @@
 
 #include "legged_interface/SwitchedModelReferenceManager.h"
 
+  // Normalized Centroidal Momentum: [linear, angular] 0-5
+  // vcom_x
+  // vcom_y
+  // vcom_z
+  // L_x / robotMass
+  // L_y / robotMass
+  // L_z / robotMass
+
+  // Base Pose: [position, orientation] 6-11
+  // p_base_x
+  // p_base_y
+  // p_base_z
+  // theta_base_z
+  // theta_base_y
+  // theta_base_x
+
+  // Leg Joint Positions: [LF, LH, RF, RH] 12-23
+  // LF_HAA
+  // LF_HFE
+  // LF_KFE
+  // LH_HAA
+  // LH_HFE
+  // LH_KFE
+  // RF_HAA
+  // RF_HFE
+  // RF_KFE
+  // RH_HAA
+  // RH_HFE
+  // RH_KFE
+
+
+  //Feet Contact Forces: [LF, RF, LH, RH] 0-11
+  //left_front_force
+  //left_front_force
+  //left_front_force
+  //right_front_force
+  //right_front_force
+  //right_front_force
+  //left_hind_force
+  //left_hind_force
+  //left_hind_force
+  //right_hind_force
+  //right_hind_force
+  //right_hind_force
+
+  //foot velocity relative to base: [LF, LH, RF, RH] (uses the Jacobian at nominal configuration) 12-23
+  //x
+  //y
+  //z
+  //x
+  //y
+  //z
+  //x
+  //y
+  //z
+  //x
+  //y
+  //z
+
+
+
 namespace legged {
 using namespace ocs2;
 using namespace legged_robot;

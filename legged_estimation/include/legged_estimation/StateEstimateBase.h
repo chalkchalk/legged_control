@@ -45,6 +45,7 @@ class StateEstimateBase {
   std::unique_ptr<PinocchioEndEffectorKinematics> eeKinematics_;
 
   vector3_t zyxOffset_ = vector3_t::Zero();
+  // dim = 24, [q,q_dot], q: ang, pos, joint
   vector_t rbdState_;
   contact_flag_t contactFlag_{};
   Eigen::Quaternion<scalar_t> quat_;

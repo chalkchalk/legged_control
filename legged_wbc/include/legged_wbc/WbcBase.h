@@ -48,6 +48,7 @@ class WbcBase {
   std::unique_ptr<PinocchioEndEffectorKinematics> eeKinematics_;
   CentroidalModelPinocchioMapping mapping_;
 
+  // lin, ang, joint
   vector_t qMeasured_, vMeasured_, inputLast_;
   matrix_t j_, dj_;
   contact_flag_t contactFlag_{};

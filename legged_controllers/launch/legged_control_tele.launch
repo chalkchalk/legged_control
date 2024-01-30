@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+
+<launch>
+    
+    <include file="$(find legged_controllers)/launch/load_controller.launch"/>
+    
+    <node pkg="doggy_tele" type="cmd_to_ocs2" name="cmd_to_ocs2" output="screen"/>
+
+    <include file="$(find doggy_tele)/launch/doggy_joy.launch">
+        <arg name="joy_type" value="gazebo"/>
+    </include>
+    
+            
+</launch>
