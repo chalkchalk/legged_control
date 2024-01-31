@@ -1,0 +1,8 @@
+<launch>
+    <include file="$(find legged_unitree_description)/launch/empty_world.launch">
+        <arg name="world" value="ice_world"/>
+    </include>
+
+
+
+</launch>

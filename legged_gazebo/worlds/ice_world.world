@@ -1,0 +1,1159 @@
+<sdf version='1.6'>
+  <world name='default'>
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>80</iters>
+          <sor>1.3</sor>
+          <use_dynamic_moi_rescaling>0</use_dynamic_moi_rescaling>
+        </solver>
+        <constraints>
+          <cfm>0</cfm>
+          <erp>0.2</erp>
+          <contact_max_correcting_vel>0.1</contact_max_correcting_vel>
+          <contact_surface_layer>0.0001</contact_surface_layer>
+        </constraints>
+      </ode>
+    </physics>
+    <scene>
+      <sky>
+        <clouds>
+          <speed>12</speed>
+        </clouds>
+      </sky>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose frame=''>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.81</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <audio>
+      <device>default</device>
+    </audio>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='ice_plane_small'>
+      <static>1</static>
+      <link name='ice_plane_small'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_small/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.05 0.05 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_small/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.05 0.05 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-0.009383 -2.98414 0 0 -0 0</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>120 796000000</sim_time>
+      <real_time>93 314981089</real_time>
+      <wall_time>1680769590 738008832</wall_time>
+      <iterations>91236</iterations>
+      <model name='glass_plane_small'>
+        <pose frame=''>2 -1.5 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='glass_plane_small'>
+          <pose frame=''>2 -1.5 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane'>
+        <pose frame=''>-4 0 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane'>
+          <pose frame=''>-4 0 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015'>
+        <pose frame=''>0.60888 3.75647 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>0.60888 3.75647 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone'>
+        <pose frame=''>-0.270306 3.64631 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>-0.270306 3.64631 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_0'>
+        <pose frame=''>0.902644 4.73356 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>0.902644 4.73356 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_1'>
+        <pose frame=''>0.078273 4.87493 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>0.078273 4.87493 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_10'>
+        <pose frame=''>-0.941775 6.13349 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>-0.941775 6.13349 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_11'>
+        <pose frame=''>1.40798 6.4297 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>1.40798 6.4297 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_12'>
+        <pose frame=''>0.767404 7.34533 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>0.767404 7.34533 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_13'>
+        <pose frame=''>-0.284041 7.31588 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>-0.284041 7.31588 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_14'>
+        <pose frame=''>2.28524 6.07257 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>2.28524 6.07257 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_2'>
+        <pose frame=''>-1.1019 4.69391 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>-1.1019 4.69391 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_3'>
+        <pose frame=''>0.407791 5.56135 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>0.407791 5.56135 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_4'>
+        <pose frame=''>-0.465827 5.41295 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>-0.465827 5.41295 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_5'>
+        <pose frame=''>1.43306 4.002 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>1.43306 4.002 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_6'>
+        <pose frame=''>1.41926 5.36339 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>1.41926 5.36339 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_7'>
+        <pose frame=''>-1.0392 3.86046 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>-1.0392 3.86046 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_8'>
+        <pose frame=''>-0.386098 4.27187 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>-0.386098 4.27187 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_015_clone_9'>
+        <pose frame=''>0.113881 6.5397 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_015'>
+          <pose frame=''>0.113881 6.5397 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ice_plane_small'>
+        <pose frame=''>2 1.5 0.001 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ice_plane_small'>
+          <pose frame=''>2 1.5 0.001 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose frame=''>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>-1.90868 3.85265 3.56912 0 0.683643 -1.09499</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <model name='glass_plane_small'>
+      <static>1</static>
+      <link name='glass_plane_small'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://glass_plane_small/materials/meshes/glass_plane_small.dae</uri>
+              <scale>0.05 0.05 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://glass_plane_small/materials/meshes/glass_plane_small.dae</uri>
+              <scale>0.05 0.05 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.5</mu>
+                <mu2>0.25</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>2.02772 -1.96967 0 0 -0 0</pose>
+    </model>
+    <model name='ice_plane'>
+      <static>1</static>
+      <link name='ice_plane'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane/materials/meshes/ice_plane.dae</uri>
+              <scale>0.2 0.2 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane/materials/meshes/ice_plane.dae</uri>
+              <scale>0.2 0.2 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-3.97612 0.009845 0 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>0.42601 3.83393 0 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-0.107462 3.883 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_0'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>0.902644 4.73356 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_1'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>0.053761 4.73016 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_2'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-0.961998 4.75109 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_3'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>0.407791 5.56135 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_4'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-0.465827 5.41295 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_5'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>1.43306 4.002 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_6'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>1.41926 5.36339 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_7'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-1.0392 3.86046 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_8'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-0.521185 4.37363 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_9'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>0.113881 6.5397 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_10'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-0.941775 6.13349 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_11'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>1.40798 6.4297 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_12'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>0.767404 7.34533 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_13'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-0.284041 7.31588 0.001 0 -0 0</pose>
+    </model>
+    <model name='ice_plane_015_clone_14'>
+      <static>1</static>
+      <link name='ice_plane_015'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://ice_plane_015/materials/meshes/ice_plane_small.dae</uri>
+              <scale>0.015 0.015 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.05</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>2.28524 6.07257 0.001 0 -0 0</pose>
+    </model>
+  </world>
+</sdf>
