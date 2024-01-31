@@ -1,7 +1,7 @@
 doggy_joy:
-  max_vel_x: 0.3
-  max_vel_y: 0.3
-  max_yaw_rate: 0.5
+  max_vel_x: 0.8
+  max_vel_y: 0.8
+  max_yaw_rate: 1.5
   max_body_roll: 1.0
   max_body_pitch: 1.0
   max_body_yaw: 1.0

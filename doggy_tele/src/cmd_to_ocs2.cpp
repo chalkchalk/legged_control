@@ -98,14 +98,14 @@ void CmdToOCS2::get_trajectory(void)
     Eigen::Matrix<scalar_t, 3, 1> zyx = currentPose.tail(3);
     vector_t cmdVelRot = getRotationMatrixFromZyxEulerAngles(zyx) * cmdVel;
     vector_t target_pose = vector_t::Zero(6);
-    scalar_t timeToTarget = time_step;
+    scalar_t timeToTarget = time_step * 4.0;
     target_pose(0) = currentPose(0) + cmdVelRot(0) * timeToTarget;
     target_pose(1) = currentPose(1) + cmdVelRot(1) * timeToTarget;
     target_pose(2) = doggy_cmd_.body_height;
     target_pose(3) = currentPose(3) + doggy_cmd_.yaw_rate * timeToTarget;
     target_pose(4) = 0;
     target_pose(5) = 0;
-    trajectory_ = targetPoseToTargetTrajectories(target_pose, observation, timeToTarget);
+    trajectory_ = targetPoseToTargetTrajectories(target_pose, observation,  observation.time + timeToTarget);
 }
 void CmdToOCS2::publish_ocs2_trajectory(void)
 {
