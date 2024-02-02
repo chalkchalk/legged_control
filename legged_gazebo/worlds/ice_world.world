@@ -130,8 +130,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -438,8 +438,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -479,8 +479,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -520,8 +520,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -561,8 +561,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -602,8 +602,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -643,8 +643,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -684,8 +684,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -725,8 +725,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -766,8 +766,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -807,8 +807,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -848,8 +848,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -889,8 +889,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -930,8 +930,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -971,8 +971,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -1012,8 +1012,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -1053,8 +1053,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -1094,8 +1094,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>
@@ -1135,8 +1135,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.1</mu>
-                <mu2>0.05</mu2>
+                <mu>0.04</mu>
+                <mu2>0.025</mu2>
               </ode>
               <torsional>
                 <ode/>

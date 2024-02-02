@@ -142,6 +142,8 @@ void LeggedController::update(const ros::Time& time, const ros::Duration& period
 
   // Publish the observation. Only needed for the command interface
   observationPublisher_.publish(ros_msg_conversions::createObservationMsg(currentObservation_));
+
+  // InfoToROS::publish_debug_value();
 }
 
 void LeggedController::updateStateEstimation(const ros::Time& time, const ros::Duration& period) {

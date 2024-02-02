@@ -1,8 +1,11 @@
 #pragma once
 
+// #include <ros/ros.h>
 #include <ocs2_centroidal_model/CentroidalModelPinocchioMapping.h>
 #include <ocs2_pinocchio_interface/PinocchioEndEffectorKinematics.h>
 #include <ocs2_legged_robot/common/Types.h>
+// #include "InfoROSDebug.h"
+// 
 
 namespace legged {
 using namespace ocs2;
@@ -38,6 +41,7 @@ private:
     double detect_kd;
     double detect_clear_z;
     double lateral_vel_filter;
+    // InfoToROS info_to_ros_;
 };
 }
 

@@ -4,6 +4,8 @@
 #include <ocs2_core/misc/LoadData.h>
 #include <ocs2_robotic_tools/common/RotationDerivativesTransforms.h>
 
+
+
 namespace legged
 {
     SlipDetector::SlipDetector(PinocchioInterface pinocchioInterface, CentroidalModelInfo info,
@@ -21,6 +23,10 @@ namespace legged
         foot_first_contact_spot.setZero();
         last_contact_state.setZero();
         eeKinematics_->setPinocchioInterface(pinocchioInterface_);
+        
+        // ros::NodeHandle nh;
+        // info_to_ros_.Init(nh, 10);
+        
     }
 
     void SlipDetector::update_estimated_state(const vector_t rgb_state)
@@ -61,7 +67,7 @@ namespace legged
 
             foot_lateral_vel_norm(i) = contactFlag_[i] * (foot_lateral_vel_norm(i) * lateral_vel_filter + eeVel[i].head<2>().norm() * (1.0 - lateral_vel_filter));
             slip_score(i) = contactFlag_[i] * (0.5 * (std::erf(detect_kd * foot_lateral_vel_norm(i) + detect_kp * foot_lateral_dis_norm(i) - 2.0) + 1.0));
-            double filter_ratio = slip_score(i) > slip_score_filtered(i) ? 0.7 : 0.6;
+            double filter_ratio = slip_score(i) > slip_score_filtered(i) ? 0.3 : 0.3;
             slip_score_filtered(i) = filter_ratio * slip_score_filtered(i) + (1.0 - filter_ratio) * slip_score(i);
             bool slip_state_temp = slip_score_filtered(i) > 0.5;
             if (slip_state_temp &&!slip_state(i)) // set this contact to be slippery
@@ -75,6 +81,11 @@ namespace legged
             }
             last_contact_state(i) = contactFlag_[i];
         }
+        // if(contactFlag_[1]) std::cout << slip_state(1) <<", " << foot_lateral_vel_norm(1) << ", " << foot_lateral_dis_norm(1) << std::endl;
+        // InfoToROS::debug_value[0] = foot_lateral_vel_norm(1) ;
+        // InfoToROS::debug_value[1] = slip_score_filtered(1) ;
+        // InfoToROS::debug_value[2] = slip_state(1) ;
+        // InfoToROS::debug_value[3] = foot_lateral_dis_norm(1) ;
     }
 
     void SlipDetector::loadSettings(const std::string &taskFile, bool verbose)
