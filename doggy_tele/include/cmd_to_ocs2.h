@@ -18,6 +18,7 @@ public:
 private:
     ros::NodeHandle& nh_;
     doggy_msgs::DoggyMove doggy_cmd_;
+    doggy_msgs::DoggyMove doggy_cmd_last_;
     ros::Subscriber doggy_cmd_sub_;
     ros::Subscriber observation_sub_;
     void publish_ocs2_cmd(void);
@@ -25,6 +26,7 @@ private:
     void publish_ocs2_trajectory(void);
     void doggy_cmd_callback(const doggy_msgs::DoggyMove &msg);
     void observation_callback(const ocs2_msgs::mpc_observation::ConstPtr& msg);
+    scalar_t estimateTimeToTarget(const vector_t& desiredBaseDisplacement);
     TargetTrajectories targetPoseToTargetTrajectories(const vector_t& targetPose, const SystemObservation& observation, const scalar_t& targetReachingTime);
     void get_trajectory();
     std::vector<std::string> gaitList_;
@@ -35,7 +37,11 @@ private:
     std::mutex latestObservationMutex_;
     TargetTrajectories trajectory_;
     scalar_t time_step;
+    scalar_t target_rotation_vel;
+    scalar_t target_lin_vel;
     vector_t defautl_joint_state;
+    vector_t target_pose;
+    vector_t target_pose_last_static_;
     std::string gaitCommand_;
     bool obs_received_;
 
