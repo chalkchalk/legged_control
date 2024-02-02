@@ -110,7 +110,7 @@ void LeggedHWSim::readSim(ros::Time time, ros::Duration period) {
 
   // Contact Sensor
   for (auto& state : name2contact_) {
-    state.second = false;
+    state.second = 0.0;
   }
   for (const auto& contact : contactManager_->GetContacts()) {
     if (static_cast<uint32_t>(contact->time.sec) != (time - period).sec ||
@@ -119,11 +119,11 @@ void LeggedHWSim::readSim(ros::Time time, ros::Duration period) {
     }
     std::string linkName = contact->collision1->GetLink()->GetName();
     if (name2contact_.find(linkName) != name2contact_.end()) {
-      name2contact_[linkName] = true;
+      name2contact_[linkName] = contact->wrench->body1Force.Length();
     }
     linkName = contact->collision2->GetLink()->GetName();
     if (name2contact_.find(linkName) != name2contact_.end()) {
-      name2contact_[linkName] = true;
+      name2contact_[linkName] = contact->wrench->body1Force.Length();
     }
   }
 
@@ -215,7 +215,7 @@ void LeggedHWSim::parseContacts(XmlRpc::XmlRpcValue& contactNames) {
   ROS_ASSERT(contactNames.getType() == XmlRpc::XmlRpcValue::TypeArray);
   for (int i = 0; i < contactNames.size(); ++i) {  // NOLINT(modernize-loop-convert)
     std::string name = contactNames[i];
-    name2contact_.insert(std::make_pair(name, false));
+    name2contact_.insert(std::make_pair(name, 0.0));
     contactSensorInterface_.registerHandle(ContactSensorHandle(name, &name2contact_[name]));
   }
   registerInterface(&contactSensorInterface_);

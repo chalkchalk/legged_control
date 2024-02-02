@@ -5,7 +5,8 @@ rosservice_command='rosservice call /controller_manager/switch_controller "start
 stop_controllers: ['']
 strictness: 0
 start_asap: false
-timeout: 0.0" '
+timeout: 5.0" '
 
+sleep 1
 # 执行 rosservice call 命令
 eval "$rosservice_command"

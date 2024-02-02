@@ -3,4 +3,7 @@ legged_unitree_hw:
   cycle_time_error_threshold: 0.002
   thread_priority: 95
   power_limit: 4
-  contact_threshold: 40
+  contact_threshold_1: 40
+  contact_threshold_2: 40
+  contact_threshold_3: 40
+  contact_threshold_4: 40

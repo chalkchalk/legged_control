@@ -33,7 +33,7 @@ bool LeggedController::init(hardware_interface::RobotHW* robot_hw, ros::NodeHand
   controller_nh.getParam("/urdfFile", urdfFile);
   controller_nh.getParam("/taskFile", taskFile);
   controller_nh.getParam("/referenceFile", referenceFile);
-  bool verbose = false;
+  bool verbose = true;
   loadData::loadCppDataType(taskFile, "legged_robot_interface.verbose", verbose);
 
   setupLeggedInterface(taskFile, urdfFile, referenceFile, verbose);
@@ -79,6 +79,7 @@ bool LeggedController::init(hardware_interface::RobotHW* robot_hw, ros::NodeHand
 void LeggedController::starting(const ros::Time& time) {
   // Initial state
   currentObservation_.state.setZero(leggedInterface_->getCentroidalModelInfo().stateDim);
+  currentObservation_.reserve.setZero(12);
   updateStateEstimation(time, ros::Duration(0.002));
   currentObservation_.input.setZero(leggedInterface_->getCentroidalModelInfo().inputDim);
   currentObservation_.mode = ModeNumber::STANCE;
@@ -148,6 +149,8 @@ void LeggedController::updateStateEstimation(const ros::Time& time, const ros::D
   contact_flag_t contacts;
   Eigen::Quaternion<scalar_t> quat;
   contact_flag_t contactFlag;
+  // vector_t contact_force;
+  // contact_force.setZero(4);
   vector3_t angularVel, linearAccel;
   matrix3_t orientationCovariance, angularVelCovariance, linearAccelCovariance;
 
@@ -156,7 +159,7 @@ void LeggedController::updateStateEstimation(const ros::Time& time, const ros::D
     jointVel(i) = hybridJointHandles_[i].getVelocity();
   }
   for (size_t i = 0; i < contacts.size(); ++i) {
-    contactFlag[i] = contactHandles_[i].isContact();
+    contactFlag[i] = contactHandles_[i].get_contact_forces() > 10.0;
   }
   for (size_t i = 0; i < 4; ++i) {
     quat.coeffs()(i) = imuSensorHandle_.getOrientation()[i];
@@ -179,6 +182,12 @@ void LeggedController::updateStateEstimation(const ros::Time& time, const ros::D
   scalar_t yawLast = currentObservation_.state(9);
   currentObservation_.state = rbdConversions_->computeCentroidalStateFromRbdModel(measuredRbdState_);
   currentObservation_.state(9) = yawLast + angles::shortest_angular_distance(yawLast, currentObservation_.state(9));
+  for(int i = 0; i < 4; ++i)
+  {
+    currentObservation_.reserve(i) = contactHandles_[i].get_contact_forces();
+    currentObservation_.reserve(i + 4) = stateEstimate_->get_slip_state()[i];
+  }
+  
   currentObservation_.mode = stateEstimate_->getMode();
 }
 

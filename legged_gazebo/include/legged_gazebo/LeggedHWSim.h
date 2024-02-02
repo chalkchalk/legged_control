@@ -88,7 +88,7 @@ class LeggedHWSim : public gazebo_ros_control::DefaultRobotHWSim {
   std::list<HybridJointData> hybridJointDatas_;
   std::list<ImuData> imuDatas_;
   std::unordered_map<std::string, std::deque<HybridJointCommand> > cmdBuffer_;
-  std::unordered_map<std::string, bool> name2contact_;
+  std::unordered_map<std::string, double> name2contact_;
 
   double delay_{};
 };

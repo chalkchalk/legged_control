@@ -81,10 +81,10 @@ class UnitreeHW : public LeggedHW {
 
   UnitreeMotorData jointData_[12]{};  // NOLINT(modernize-avoid-c-arrays)
   UnitreeImuData imuData_{};
-  bool contactState_[4]{};  // NOLINT(modernize-avoid-c-arrays)
+  double contact_force_[4]{};  // NOLINT(modernize-avoid-c-arrays)
 
   int powerLimit_{};
-  int contactThreshold_{};
+  int contactThreshold_[4]{};
 
   ros::Publisher joyPublisher_;
   ros::Time lastPub_;

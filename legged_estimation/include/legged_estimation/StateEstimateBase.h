@@ -17,6 +17,8 @@
 #include <ocs2_legged_robot/gait/MotionPhaseDefinition.h>
 #include <ocs2_pinocchio_interface/PinocchioEndEffectorKinematics.h>
 
+#include "legged_estimation/SlipDetection.h"
+
 namespace legged {
 
 using namespace ocs2;
@@ -26,7 +28,8 @@ class StateEstimateBase {
  public:
   StateEstimateBase(PinocchioInterface pinocchioInterface, CentroidalModelInfo info, const PinocchioEndEffectorKinematics& eeKinematics);
   virtual void updateJointStates(const vector_t& jointPos, const vector_t& jointVel);
-  virtual void updateContact(contact_flag_t contactFlag) { contactFlag_ = contactFlag; }
+  virtual void updateContact(contact_flag_t contactFlag) { contactFlag_ = contactFlag;}
+  virtual vector_t get_slip_state();
   virtual void updateImu(const Eigen::Quaternion<scalar_t>& quat, const vector3_t& angularVelLocal, const vector3_t& linearAccelLocal,
                          const matrix3_t& orientationCovariance, const matrix3_t& angularVelCovariance,
                          const matrix3_t& linearAccelCovariance);
@@ -43,6 +46,7 @@ class StateEstimateBase {
   PinocchioInterface pinocchioInterface_;
   CentroidalModelInfo info_;
   std::unique_ptr<PinocchioEndEffectorKinematics> eeKinematics_;
+  std::unique_ptr<SlipDetector> slip_detector_;
 
   vector3_t zyxOffset_ = vector3_t::Zero();
   // dim = 24, [q,q_dot], q: ang, pos, joint

@@ -79,7 +79,7 @@ void UnitreeHW::read(const ros::Time& time, const ros::Duration& /*period*/) {
   imuData_.linearAcc_[2] = lowState_.imu.accelerometer[2];
 
   for (size_t i = 0; i < CONTACT_SENSOR_NAMES.size(); ++i) {
-    contactState_[i] = lowState_.footForce[i] > contactThreshold_;
+    contact_force_[i] = lowState_.footForce[i]; // lowState_.footForce[i] > contactThreshold_[i];
   }
 
   // Set feedforward and velocity cmd to zero to avoid for safety when not controller setCommand
@@ -160,9 +160,12 @@ bool UnitreeHW::setupImu() {
 }
 
 bool UnitreeHW::setupContactSensor(ros::NodeHandle& nh) {
-  nh.getParam("contact_threshold", contactThreshold_);
+  nh.getParam("contact_threshold_1", contactThreshold_[0]);
+  nh.getParam("contact_threshold_2", contactThreshold_[1]);
+  nh.getParam("contact_threshold_3", contactThreshold_[2]);
+  nh.getParam("contact_threshold_4", contactThreshold_[3]);
   for (size_t i = 0; i < CONTACT_SENSOR_NAMES.size(); ++i) {
-    contactSensorInterface_.registerHandle(ContactSensorHandle(CONTACT_SENSOR_NAMES[i], &contactState_[i]));
+    contactSensorInterface_.registerHandle(ContactSensorHandle(CONTACT_SENSOR_NAMES[i], &contact_force_[i]));
   }
   return true;
 }

@@ -44,6 +44,12 @@ void StateEstimateBase::updateImu(const Eigen::Quaternion<scalar_t>& quat, const
   updateAngular(zyx, angularVelGlobal);
 }
 
+vector_t StateEstimateBase::get_slip_state()
+{
+  vector_t result = slip_detector_->get_slip_state().cast<scalar_t>();
+  return result;
+
+}
 void StateEstimateBase::updateAngular(const vector3_t& zyx, const vector_t& angularVel) {
   rbdState_.segment<3>(0) = zyx;
   rbdState_.segment<3>(info_.generalizedCoordinatesNum) = angularVel;
