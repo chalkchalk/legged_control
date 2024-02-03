@@ -18,7 +18,7 @@
 #include <hardware_interface/joint_state_interface.h>
 #include <hardware_interface/robot_hw.h>
 #include <legged_common/hardware_interface/ContactSensorInterface.h>
-#include <legged_common/hardware_interface/HybridJointInterface.h>
+#include <legged_common/hardware_interface/HybridTorqueJointInterface.h>
 
 namespace legged {
 class LeggedHW : public hardware_interface::RobotHW {
@@ -39,7 +39,7 @@ class LeggedHW : public hardware_interface::RobotHW {
   // Interface
   hardware_interface::JointStateInterface jointStateInterface_;  // NOLINT(misc-non-private-member-variables-in-classes)
   hardware_interface::ImuSensorInterface imuSensorInterface_;    // NOLINT(misc-non-private-member-variables-in-classes)
-  HybridJointInterface hybridJointInterface_;                    // NOLINT(misc-non-private-member-variables-in-classes)
+  HybridTorqueJointInterface hybridTorqueJointInterface_;                    // NOLINT(misc-non-private-member-variables-in-classes)
   ContactSensorInterface contactSensorInterface_;                // NOLINT(misc-non-private-member-variables-in-classes)
   // URDF model of the robot
   std::shared_ptr<urdf::Model> urdfModel_;  // NOLINT(misc-non-private-member-variables-in-classes)

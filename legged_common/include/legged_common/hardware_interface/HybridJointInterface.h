@@ -5,13 +5,14 @@
 #include <hardware_interface/internal/hardware_resource_manager.h>
 #include <hardware_interface/joint_state_interface.h>
 
+
 namespace legged {
 class HybridJointHandle : public hardware_interface::JointStateHandle {
  public:
   HybridJointHandle() = default;
 
   HybridJointHandle(const JointStateHandle& js, double* posDes, double* velDes, double* kp, double* kd, double* ff)
-      : JointStateHandle(js), posDes_(posDes), velDes_(velDes), kp_(kp), kd_(kd), ff_(ff) {
+      : JointStateHandle(js), posDes_(posDes), velDes_(velDes), kp_(kp), kd_(kd), ff_(ff){
     if (posDes_ == nullptr) {
       throw hardware_interface::HardwareInterfaceException("Cannot create handle '" + js.getName() +
                                                            "'. Position desired data pointer is null.");
@@ -79,12 +80,13 @@ class HybridJointHandle : public hardware_interface::JointStateHandle {
     return *ff_;
   }
 
- private:
+ protected:
   double* posDes_ = {nullptr};
   double* velDes_ = {nullptr};
   double* kp_ = {nullptr};
   double* kd_ = {nullptr};
   double* ff_ = {nullptr};
+
 };
 
 class HybridJointInterface : public hardware_interface::HardwareResourceManager<HybridJointHandle, hardware_interface::ClaimResources> {};

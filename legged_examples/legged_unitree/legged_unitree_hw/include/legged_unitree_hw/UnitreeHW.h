@@ -21,6 +21,7 @@ const std::vector<std::string> CONTACT_SENSOR_NAMES = {"RF_FOOT", "LF_FOOT", "RH
 struct UnitreeMotorData {
   double pos_, vel_, tau_;                 // state
   double posDes_, velDes_, kp_, kd_, ff_;  // command
+  double q_max_, q_min_, tau_max_, p_max_, d_max_; // software constraint
 };
 
 struct UnitreeImuData {
@@ -84,8 +85,7 @@ class UnitreeHW : public LeggedHW {
   double contact_force_[4]{};  // NOLINT(modernize-avoid-c-arrays)
 
   int powerLimit_{};
-  int contactThreshold_[4]{};
-
+  int contact_offset_[4]{};
   ros::Publisher joyPublisher_;
   ros::Time lastPub_;
 };

@@ -50,11 +50,11 @@ bool LeggedController::init(hardware_interface::RobotHW* robot_hw, ros::NodeHand
                                                                          leggedInterface_->getGeometryInterface(), pinocchioMapping, nh));
 
   // Hardware interface
-  auto* hybridJointInterface = robot_hw->get<HybridJointInterface>();
+  auto* hybridTorqueJointInterface = robot_hw->get<HybridTorqueJointInterface>();
   std::vector<std::string> joint_names{"LF_HAA", "LF_HFE", "LF_KFE", "LH_HAA", "LH_HFE", "LH_KFE",
                                        "RF_HAA", "RF_HFE", "RF_KFE", "RH_HAA", "RH_HFE", "RH_KFE"};
   for (const auto& joint_name : joint_names) {
-    hybridJointHandles_.push_back(hybridJointInterface->getHandle(joint_name));
+    hybridTorqueJointHandles_.push_back(hybridTorqueJointInterface->getHandle(joint_name));
   }
   auto* contactInterface = robot_hw->get<ContactSensorInterface>();
   for (const auto& name : leggedInterface_->modelSettings().contactNames3DoF) {
@@ -133,7 +133,7 @@ void LeggedController::update(const ros::Time& time, const ros::Duration& period
   }
 
   for (size_t j = 0; j < leggedInterface_->getCentroidalModelInfo().actuatedDofNum; ++j) {
-    hybridJointHandles_[j].setCommand(posDes(j), velDes(j), 0, 3, torque(j));
+    hybridTorqueJointHandles_[j].setCommand(posDes(j), velDes(j), 50, 0.2, torque(j), 0, 0, 20, 20, 20);
   }
 
   // Visualization
@@ -147,7 +147,7 @@ void LeggedController::update(const ros::Time& time, const ros::Duration& period
 }
 
 void LeggedController::updateStateEstimation(const ros::Time& time, const ros::Duration& period) {
-  vector_t jointPos(hybridJointHandles_.size()), jointVel(hybridJointHandles_.size());
+  vector_t jointPos(hybridTorqueJointHandles_.size()), jointVel(hybridTorqueJointHandles_.size());
   contact_flag_t contacts;
   Eigen::Quaternion<scalar_t> quat;
   contact_flag_t contactFlag;
@@ -156,9 +156,10 @@ void LeggedController::updateStateEstimation(const ros::Time& time, const ros::D
   vector3_t angularVel, linearAccel;
   matrix3_t orientationCovariance, angularVelCovariance, linearAccelCovariance;
 
-  for (size_t i = 0; i < hybridJointHandles_.size(); ++i) {
-    jointPos(i) = hybridJointHandles_[i].getPosition();
-    jointVel(i) = hybridJointHandles_[i].getVelocity();
+  for (size_t i = 0; i < hybridTorqueJointHandles_.size(); ++i) {
+    jointPos(i) = hybridTorqueJointHandles_[i].getPosition();
+    jointVel(i) = hybridTorqueJointHandles_[i].getVelocity();
+    
   }
   for (size_t i = 0; i < contacts.size(); ++i) {
     contactFlag[i] = contactHandles_[i].get_contact_forces() > 10.0;

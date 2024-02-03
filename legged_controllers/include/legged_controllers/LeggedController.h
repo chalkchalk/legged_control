@@ -24,7 +24,7 @@ namespace legged {
 using namespace ocs2;
 using namespace legged_robot;
 
-class LeggedController : public controller_interface::MultiInterfaceController<HybridJointInterface, hardware_interface::ImuSensorInterface,
+class LeggedController : public controller_interface::MultiInterfaceController<HybridTorqueJointInterface, hardware_interface::ImuSensorInterface,
                                                                                ContactSensorInterface> {
  public:
   LeggedController() = default;
@@ -46,7 +46,7 @@ class LeggedController : public controller_interface::MultiInterfaceController<H
   // Interface
   std::shared_ptr<LeggedInterface> leggedInterface_;
   std::shared_ptr<PinocchioEndEffectorKinematics> eeKinematicsPtr_;
-  std::vector<HybridJointHandle> hybridJointHandles_;
+  std::vector<HybridTorqueJointHandle> hybridTorqueJointHandles_;
   std::vector<ContactSensorHandle> contactHandles_;
   hardware_interface::ImuSensorHandle imuSensorHandle_;
 

@@ -13,7 +13,7 @@ bool LeggedHW::init(ros::NodeHandle& root_nh, ros::NodeHandle& /*robot_hw_nh*/) 
   }
 
   registerInterface(&jointStateInterface_);
-  registerInterface(&hybridJointInterface_);
+  registerInterface(&hybridTorqueJointInterface_);
   registerInterface(&imuSensorInterface_);
   registerInterface(&contactSensorInterface_);
 

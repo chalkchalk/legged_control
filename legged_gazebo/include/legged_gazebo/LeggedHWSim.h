@@ -45,7 +45,7 @@
 #include <hardware_interface/joint_command_interface.h>
 
 #include <legged_common/hardware_interface/ContactSensorInterface.h>
-#include <legged_common/hardware_interface/HybridJointInterface.h>
+#include <legged_common/hardware_interface/HybridTorqueJointInterface.h>
 
 namespace legged {
 struct HybridJointData {
@@ -57,6 +57,28 @@ struct HybridJointCommand {
   ros::Time stamp_;
   double posDes_{}, velDes_{}, kp_{}, kd_{}, ff_{};
 };
+
+struct HybridTorqueJointData {
+  hardware_interface::JointHandle joint_;
+  double posDes_{}, velDes_{}, kp_{}, kd_{}, ff_{};
+};
+
+struct HybridTorqueJointCommand {
+  ros::Time stamp_;
+  double posDes_{}, velDes_{}, kp_{}, kd_{}, ff_{};
+};
+
+
+// struct HybridTorqueJointData {
+//   hardware_interface::JointHandle joint_;
+//   double posDes_{}, velDes_{}, kp_{}, kd_{}, ff_{}, q_min_{}, q_max_{}, tau_max_{}, p_max_{}, d_max_{};
+// };
+
+// struct HybridTorqueJointCommand {
+//   ros::Time stamp_;
+//   double posDes_{}, velDes_{}, kp_{}, kd_{}, ff_{}, q_min_{}, q_max_{}, tau_max_{}, p_max_{}, d_max_{};
+// };
+
 
 struct ImuData {
   gazebo::physics::LinkPtr linkPtr_;
@@ -79,15 +101,15 @@ class LeggedHWSim : public gazebo_ros_control::DefaultRobotHWSim {
   void parseImu(XmlRpc::XmlRpcValue& imuDatas, const gazebo::physics::ModelPtr& parentModel);
   void parseContacts(XmlRpc::XmlRpcValue& contactNames);
 
-  HybridJointInterface hybridJointInterface_;
+  HybridTorqueJointInterface hybridTorqueJointInterface_;
   ContactSensorInterface contactSensorInterface_;
   hardware_interface::ImuSensorInterface imuSensorInterface_;
 
   gazebo::physics::ContactManager* contactManager_{};
 
-  std::list<HybridJointData> hybridJointDatas_;
+  std::list<HybridTorqueJointData> hybridTorqueJointDatas_;
   std::list<ImuData> imuDatas_;
-  std::unordered_map<std::string, std::deque<HybridJointCommand> > cmdBuffer_;
+  std::unordered_map<std::string, std::deque<HybridTorqueJointCommand> > cmdBuffer_;
   std::unordered_map<std::string, double> name2contact_;
 
   double delay_{};

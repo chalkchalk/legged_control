@@ -53,7 +53,7 @@ bool UnitreeHW::init(ros::NodeHandle& root_nh, ros::NodeHandle& robot_hw_nh) {
     return false;
   }
 
-  joyPublisher_ = root_nh.advertise<sensor_msgs::Joy>("/joy", 10);
+  joyPublisher_ = root_nh.advertise<sensor_msgs::Joy>("/joy_unitree", 10);
   return true;
 }
 
@@ -79,13 +79,13 @@ void UnitreeHW::read(const ros::Time& time, const ros::Duration& /*period*/) {
   imuData_.linearAcc_[2] = lowState_.imu.accelerometer[2];
 
   for (size_t i = 0; i < CONTACT_SENSOR_NAMES.size(); ++i) {
-    contact_force_[i] = lowState_.footForce[i]; // lowState_.footForce[i] > contactThreshold_[i];
+    contact_force_[i] = lowState_.footForce[i] + contact_offset_[i];
   }
 
   // Set feedforward and velocity cmd to zero to avoid for safety when not controller setCommand
-  std::vector<std::string> names = hybridJointInterface_.getNames();
+  std::vector<std::string> names = hybridTorqueJointInterface_.getNames();
   for (const auto& name : names) {
-    HybridJointHandle handle = hybridJointInterface_.getHandle(name);
+    HybridTorqueJointHandle handle = hybridTorqueJointInterface_.getHandle(name);
     handle.setFeedforward(0.);
     handle.setVelocityDesired(0.);
     handle.setKd(3.);
@@ -138,7 +138,7 @@ bool UnitreeHW::setupJoints() {
     hardware_interface::JointStateHandle state_handle(joint.first, &jointData_[index].pos_, &jointData_[index].vel_,
                                                       &jointData_[index].tau_);
     jointStateInterface_.registerHandle(state_handle);
-    hybridJointInterface_.registerHandle(HybridJointHandle(state_handle, &jointData_[index].posDes_, &jointData_[index].velDes_,
+    hybridTorqueJointInterface_.registerHandle(HybridTorqueJointHandle(state_handle, &jointData_[index].posDes_, &jointData_[index].velDes_,
                                                            &jointData_[index].kp_, &jointData_[index].kd_, &jointData_[index].ff_));
   }
   return true;
@@ -160,10 +160,11 @@ bool UnitreeHW::setupImu() {
 }
 
 bool UnitreeHW::setupContactSensor(ros::NodeHandle& nh) {
-  nh.getParam("contact_threshold_1", contactThreshold_[0]);
-  nh.getParam("contact_threshold_2", contactThreshold_[1]);
-  nh.getParam("contact_threshold_3", contactThreshold_[2]);
-  nh.getParam("contact_threshold_4", contactThreshold_[3]);
+  nh.getParam("contact_offset_1", contact_offset_[0]);
+  nh.getParam("contact_offset_2", contact_offset_[1]);
+  nh.getParam("contact_offset_3", contact_offset_[2]);
+  nh.getParam("contact_offset_4", contact_offset_[3]);
+  
   for (size_t i = 0; i < CONTACT_SENSOR_NAMES.size(); ++i) {
     contactSensorInterface_.registerHandle(ContactSensorHandle(CONTACT_SENSOR_NAMES[i], &contact_force_[i]));
   }

@@ -10,7 +10,7 @@
 #include <realtime_tools/realtime_publisher.h>
 
 #include <legged_common/hardware_interface/ContactSensorInterface.h>
-#include <legged_common/hardware_interface/HybridJointInterface.h>
+#include <legged_common/hardware_interface/HybridTorqueJointInterface.h>
 #include <ocs2_centroidal_model/CentroidalModelInfo.h>
 #include <ocs2_legged_robot/common/ModelSettings.h>
 #include <ocs2_legged_robot/common/Types.h>

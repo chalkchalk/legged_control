@@ -2,8 +2,9 @@ legged_unitree_hw:
   loop_frequency: 500
   cycle_time_error_threshold: 0.002
   thread_priority: 95
-  power_limit: 4
-  contact_threshold_1: 40
-  contact_threshold_2: 40
-  contact_threshold_3: 40
-  contact_threshold_4: 40
+  power_limit: 6
+  contact_offset_1: 20
+  contact_offset_2: 20
+  contact_offset_3: 0
+  contact_offset_4: 0
+  max_torque: 17.5
