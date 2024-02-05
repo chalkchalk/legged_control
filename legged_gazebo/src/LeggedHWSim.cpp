@@ -49,8 +49,6 @@ bool LeggedHWSim::initSim(const std::string& robot_namespace, ros::NodeHandle mo
     hybridTorqueJointDatas_.push_back(HybridTorqueJointData{.joint_ = ej_interface_.getHandle(name)});
     HybridTorqueJointData& back = hybridTorqueJointDatas_.back();
     hybridTorqueJointInterface_.registerHandle(HybridTorqueJointHandle(back.joint_, &back.posDes_, &back.velDes_, &back.kp_, &back.kd_, &back.ff_));
-
-    // hybridTorqueJointInterface_.registerHandle(HybridTorqueJointHandle(back.joint_, &back.posDes_, &back.velDes_, &back.kp_, &back.kd_, &back.ff_,  &back.q_min_,  &back.q_max_,  &back.tau_max_, &back.q_max_, &back.d_max_));
     cmdBuffer_.insert(std::make_pair(name.c_str(), std::deque<HybridTorqueJointCommand>()));
   }
   // IMU interface
@@ -148,14 +146,15 @@ void LeggedHWSim::writeSim(ros::Time time, ros::Duration period) {
     while (!buffer.empty() && buffer.back().stamp_ + ros::Duration(delay_) < time) {
       buffer.pop_back();
     }
-    // buffer.push_front(HybridTorqueJointCommand{
-    //     .stamp_ = time, .posDes_ = joint.posDes_, .velDes_ = joint.velDes_, .kp_ = joint.kp_, .kd_ = joint.kd_, .ff_ = joint.ff_, .q_min_ = joint.q_min_, .q_max_ = joint.q_max_, .tau_max_ = joint.tau_max_, .p_max_ = joint.p_max_, .d_max_ = joint.d_max_});
     buffer.push_front(HybridTorqueJointCommand{
         .stamp_ = time, .posDes_ = joint.posDes_, .velDes_ = joint.velDes_, .kp_ = joint.kp_, .kd_ = joint.kd_, .ff_ = joint.ff_});
 
     const auto& cmd = buffer.back();
-    joint.joint_.setCommand(cmd.kp_ * (cmd.posDes_ - joint.joint_.getPosition()) + cmd.kd_ * (cmd.velDes_ - joint.joint_.getVelocity()) +
-                            cmd.ff_);
+    double cmd_torque = cmd.kp_ * (cmd.posDes_ - joint.joint_.getPosition()) + cmd.kd_ * (cmd.velDes_ - joint.joint_.getVelocity()) +
+                             cmd.ff_;
+    joint.joint_.setCommand(cmd_torque);
+    // if(joint.joint_.getName()  == "RF_KFE")
+    //   std::cout << "B:" << cmd_torque << ", " << cmd.kp_<< ", " << cmd.kd_<< ", " << cmd.posDes_<< ", " << cmd.velDes_  <<std::endl;
   }
   DefaultRobotHWSim::writeSim(time, period);
 }
