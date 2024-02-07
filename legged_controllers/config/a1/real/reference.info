@@ -19,6 +19,28 @@ defaultJointState
    (11,0) -1.44   ; RH_KFE
 }
 
+maxJointAngle
+{
+   [0]  0.802   ; HAA
+   [1]  4.188   ; HFE
+   [2]  -0.916  ; KFE
+}
+
+minJointAngle
+{
+   [0]  -0.802  ; HAA
+   [1]  -1.047  ; HFE
+   [2]  -2.696  ; KFE
+}
+
+maxTorque
+{
+   [0]  22.5  ; tau_max
+   [1]  22.5  ; p_max
+   [2]  10.0  ; d_max
+}
+
+
 initialModeSchedule
 {
   modeSequence

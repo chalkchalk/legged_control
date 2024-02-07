@@ -1,0 +1,68 @@
+targetDisplacementVelocity          0.5;
+targetRotationVelocity              1.57;
+
+comHeight                           0.3
+
+defaultJointState
+{
+   (0,0)  -0.15   ; LF_HAA
+   (1,0)   0.72   ; LF_HFE
+   (2,0)  -1.44   ; LF_KFE
+   (3,0)  -0.15   ; LH_HAA
+   (4,0)   0.72   ; LH_HFE
+   (5,0)  -1.44   ; LH_KFE
+   (6,0)   0.15   ; RF_HAA
+   (7,0)   0.72   ; RF_HFE
+   (8,0)  -1.44   ; RF_KFE
+   (9,0)   0.15   ; RH_HAA
+   (10,0)  0.72   ; RH_HFE
+   (11,0) -1.44   ; RH_KFE
+}
+
+maxJointAngle
+{
+   [0]  0.802   ; HAA
+   [1]  4.188   ; HFE
+   [2]  -0.916  ; KFE
+}
+
+minJointAngle
+{
+   [0]  -0.802  ; HAA
+   [1]  -1.047  ; HFE
+   [2]  -2.696  ; KFE
+}
+
+maxTorque
+{
+   [0]  22.5  ; tau_max
+   [1]  22.5  ; p_max
+   [2]  10.0  ; d_max
+}
+
+
+initialModeSchedule
+{
+  modeSequence
+  {
+    [0]  STANCE
+    [1]  STANCE
+  }
+  eventTimes
+  {
+    [0]  0.5
+  }
+}
+
+defaultModeSequenceTemplate
+{
+  modeSequence
+  {
+    [0]  STANCE
+  }
+  switchingTimes
+  {
+    [0]  0.0
+    [1]  1.0
+  }
+}

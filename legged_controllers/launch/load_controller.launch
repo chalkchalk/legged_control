@@ -7,12 +7,13 @@
       <arg name="rviz"                default="true"/>
       <arg name="urdfFile"            default="/tmp/legged_control/$(arg robot_type).urdf"/>
       <arg name="description_name"    default="legged_robot_description"/>
+      <arg name="env"                 default="real"/>
 
       <!-- make the files into global parameters -->
       <param name="urdfFile" value="$(arg urdfFile)"/>
-      <param name="taskFile" value="$(find legged_controllers)/config/$(arg robot_type)/task.info"/>
-      <param name="referenceFile" value="$(find legged_controllers)/config/$(arg robot_type)/reference.info"/>
-      <param name="gaitCommandFile" value="$(find legged_controllers)/config/$(arg robot_type)/gait.info"/>
+      <param name="taskFile" value="$(find legged_controllers)/config/$(arg robot_type)/$(arg env)/task.info"/>
+      <param name="referenceFile" value="$(find legged_controllers)/config/$(arg robot_type)/$(arg env)/reference.info"/>
+      <param name="gaitCommandFile" value="$(find legged_controllers)/config/$(arg robot_type)/$(arg env)/gait.info"/>
 
       <rosparam file="$(find legged_controllers)/config/controllers.yaml" command="load"/>
 
@@ -39,7 +40,7 @@
             output="screen"/>
 
       
-            
+            /root/catkin_ws/src/legged_control/legged_controllers/config/a1/real /reference.info
 
 <!-- 
 rosservice call /controller_manager/switch_controller "start_controllers: ['controllers/legged_controller']                   

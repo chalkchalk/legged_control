@@ -5,6 +5,9 @@
 #include <legged_common/hardware_interface/HybridJointInterface.h>
 #include <legged_common/hardware_interface/PDHybridMotorControl.h>
 
+const double PosStopF = 2.146E+9f;
+const double VelStopF = 16000.0f;
+
 namespace legged {
 class HybridTorqueJointHandle : public HybridJointHandle {
  public:
@@ -12,20 +15,23 @@ class HybridTorqueJointHandle : public HybridJointHandle {
 
   HybridTorqueJointHandle(const JointStateHandle& js, double* posDes, double* velDes, double* kp, double* kd, double* ff/*, double* q_min, double* q_max, double* tau_max, double* p_max, double* d_max*/)
       : HybridJointHandle(js, posDes, velDes, kp, kd, ff), // q_min_(q_min), q_max_(q_max), tau_max_(tau_max), p_max_(p_max), d_max_(d_max), 
-      pd_motor_(js.getName(), 0, 0, 0, 0, 0, 0, 0){
+      pd_motor_(js.getName(), 0, 0, 0, 0, 0, 0, 0, 0.001){
   }
 
   void setCommand(double pos_des, double vel_des, double kp, double kd, double ff, double q_min, double q_max, double tau_max, double p_max, double d_max) {
-    setPositionDesired(pos_des);
-    setVelocityDesired(vel_des);
+    
     if(q_min == 0 && q_max == 0)
     {
+      setPositionDesired(pos_des);
+      setVelocityDesired(vel_des);
       setKp(kp);
       setKd(kd);
       setFeedforward(ff);
     }
     else
     {
+      setPositionDesired(PosStopF);
+      setVelocityDesired(VelStopF);
       setKp(0.0);
       setKd(0.0);
       pd_motor_.kp_ = kp;

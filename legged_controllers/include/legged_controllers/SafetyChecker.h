@@ -5,29 +5,44 @@
 #pragma once
 
 #include <ocs2_centroidal_model/AccessHelperFunctions.h>
+#include <ocs2_core/misc/LoadData.h>
 
-namespace legged {
-using namespace ocs2;
-using namespace centroidal_model;
-class SafetyChecker {
- public:
-  explicit SafetyChecker(const CentroidalModelInfo& info) : info_(info) {}
-
-  bool check(const SystemObservation& observation, const vector_t& /*optimized_state*/, const vector_t& /*optimized_input*/) {
-    return checkOrientation(observation);
-  }
-
- protected:
-  bool checkOrientation(const SystemObservation& observation) {
-    vector_t pose = getBasePose(observation.state, info_);
-    if (pose(5) > M_PI_2 || pose(5) < -M_PI_2) {
-      std::cerr << "[SafetyChecker] Orientation safety check failed!" << std::endl;
-      return false;
+namespace legged
+{
+  using namespace ocs2;
+  using namespace centroidal_model;
+  class SafetyChecker
+  {
+  public:
+    explicit SafetyChecker(const CentroidalModelInfo &info, std::string referenceFile) : info_(info)
+    {
+      loadData::loadStdVector(referenceFile, "minJointAngle", angle_min, false);
+      loadData::loadStdVector(referenceFile, "maxJointAngle", angle_max, false);
+      loadData::loadStdVector(referenceFile, "maxTorque", tau_max, false);
     }
-    return true;
-  }
 
-  const CentroidalModelInfo& info_;
-};
+    bool check(const SystemObservation &observation, const vector_t & /*optimized_state*/, const vector_t & /*optimized_input*/)
+    {
+      return checkOrientation(observation);
+    }
 
-}  // namespace legged
+    std::vector<double> angle_min;
+    std::vector<double> angle_max;
+    std::vector<double> tau_max;
+
+  protected:
+    bool checkOrientation(const SystemObservation &observation)
+    {
+      vector_t pose = getBasePose(observation.state, info_);
+      if (pose(5) > M_PI_2 || pose(5) < -M_PI_2)
+      {
+        std::cerr << "[SafetyChecker] Orientation safety check failed!" << std::endl;
+        return false;
+      }
+      return true;
+    }
+
+    const CentroidalModelInfo &info_;
+  };
+
+} // namespace legged

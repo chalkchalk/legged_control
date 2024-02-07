@@ -299,6 +299,13 @@ swingLegTask
     kd                   37
 }
 
+hybridMotorControl
+{
+    kp                   30
+    kd                   1.0
+}
+
+
 weight
 {
     swingLeg        100

@@ -7,4 +7,3 @@ legged_unitree_hw:
   contact_offset_2: 20
   contact_offset_3: 0
   contact_offset_4: 0
-  max_torque: 17.5
