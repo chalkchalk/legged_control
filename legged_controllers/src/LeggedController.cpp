@@ -142,8 +142,10 @@ namespace legged
 
     for (size_t j = 0; j < leggedInterface_->getCentroidalModelInfo().actuatedDofNum; ++j)
     {
+      // hybridTorqueJointHandles_[j].setCommand(posDes(j), velDes(j), kp_, kd_, torque(j),
+      //                                         safetyChecker_->angle_min[j % 3], safetyChecker_->angle_max[j % 3], safetyChecker_->tau_max[0], safetyChecker_->tau_max[1], safetyChecker_->tau_max[2]);
       hybridTorqueJointHandles_[j].setCommand(posDes(j), velDes(j), kp_, kd_, torque(j),
-                                              safetyChecker_->angle_min[j % 3], safetyChecker_->angle_max[j % 3], safetyChecker_->tau_max[0], safetyChecker_->tau_max[1], safetyChecker_->tau_max[2]);
+                                              0.0, 0.0, safetyChecker_->tau_max[0], safetyChecker_->tau_max[1], safetyChecker_->tau_max[2]);
     }
 
     // Visualization
@@ -203,7 +205,7 @@ namespace legged
     for (int i = 0; i < 4; ++i)
     {
       currentObservation_.reserve(i) = contactHandles_[i].get_contact_forces();
-      currentObservation_.reserve(i + 4) = stateEstimate_->get_slip_state()[i];
+      // currentObservation_.reserve(i + 4) = stateEstimate_->get_slip_state()[i];
     }
 
     currentObservation_.mode = stateEstimate_->getMode();
@@ -234,8 +236,8 @@ namespace legged
 
     boost::property_tree::ptree pt;
     boost::property_tree::read_info(taskFile, pt);
-    loadData::loadPtreeValue(pt, kp_, "hybridMotorControl.detect_kd", verbose);
-    loadData::loadPtreeValue(pt, kd_, "hybridMotorControl.detect_kp", verbose);
+    loadData::loadPtreeValue(pt, kp_, "hybridMotorControl.kp", verbose);
+    loadData::loadPtreeValue(pt, kd_, "hybridMotorControl.kd", verbose);
   }
 
   void LeggedController::setupMpc()

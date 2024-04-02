@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 
 <launch>
-      <arg name="robot_type" default="$(env ROBOT_TYPE)" doc="Robot type: [a1, aliengo, go1, laikago]"/>
-
+      <arg name="robot_type" default="$(env ROBOT_TYPE)" doc="Robot type: [a1, aliengo, go1, laikago, go2]"/>
+      <!-- <arg name="robot_type" default="a1"/> -->
       <arg name="cheater"             default="false"/>
       <arg name="rviz"                default="true"/>
       <arg name="urdfFile"            default="/tmp/legged_control/$(arg robot_type).urdf"/>
       <arg name="description_name"    default="legged_robot_description"/>
-      <arg name="env"                 default="real"/>
+      <arg name="env"                 default="simulation"/>
 
       <!-- make the files into global parameters -->
       <param name="urdfFile" value="$(arg urdfFile)"/>

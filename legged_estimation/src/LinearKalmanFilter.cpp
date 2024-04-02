@@ -54,7 +54,7 @@ KalmanFilterEstimate::KalmanFilterEstimate(PinocchioInterface pinocchioInterface
 
   world2odom_.setRotation(tf2::Quaternion::getIdentity());
 
-  slip_detector_ = std::make_unique<SlipDetector>(pinocchioInterface,info, eeKinematics);
+  // slip_detector_ = std::make_unique<SlipDetector>(pinocchioInterface,info, eeKinematics);
 
   sub_ = ros::NodeHandle().subscribe<nav_msgs::Odometry>("/tracking_camera/odom/sample", 10, &KalmanFilterEstimate::callback, this);
 }
@@ -161,9 +161,9 @@ vector_t KalmanFilterEstimate::update(const ros::Time& time, const ros::Duration
   odom.child_frame_id = "base";
   publishMsgs(odom);
 
-  slip_detector_->updateContact(contactFlag_);
-  slip_detector_->update_estimated_state(rbdState_);
-  slip_detector_->update();
+  // slip_detector_->updateContact(contactFlag_);
+  // slip_detector_->update_estimated_state(rbdState_);
+  // slip_detector_->update();
 
 
   return rbdState_;
@@ -280,7 +280,7 @@ void KalmanFilterEstimate::loadSettings(const std::string& taskFile, bool verbos
   loadData::loadPtreeValue(pt, footSensorNoiseVelocity_, prefix + "footSensorNoiseVelocity", verbose);
   loadData::loadPtreeValue(pt, footHeightSensorNoise_, prefix + "footHeightSensorNoise", verbose);
 
-  slip_detector_->loadSettings(taskFile, verbose);
+  // slip_detector_->loadSettings(taskFile, verbose);
 }
 
 }  // namespace legged

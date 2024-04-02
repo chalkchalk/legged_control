@@ -325,14 +325,3 @@ kalmanFilter
     footHeightSensorNoise       0.01
 }
 
-; Antislip
-anti_slip
-{
-    impedance_kp                400.0
-    impedance_kd                0.0
-    impedance_f_max             20.0
-    lateral_vel_filter          0.5
-    detect_kd                   10.0
-    detect_kp                   40.0
-    detect_clear_z              0.04
-}

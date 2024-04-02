@@ -15,7 +15,7 @@ class SlipDetector
 public:
     SlipDetector(PinocchioInterface pinocchioInterface, CentroidalModelInfo info, const PinocchioEndEffectorKinematics& eeKinematics);
     void update();
-    Eigen::Vector4i get_slip_state(){return slip_state;}
+    // Eigen::Vector4i get_slip_state(){return slip_state;}
     Eigen::Vector4d get_slip_score(){return slip_score;}
     Eigen::Matrix<double, 3, 4> get_foot_slip_spot(){return foot_slip_spot;};
     void loadSettings(const std::string& taskFile, bool verbose);
