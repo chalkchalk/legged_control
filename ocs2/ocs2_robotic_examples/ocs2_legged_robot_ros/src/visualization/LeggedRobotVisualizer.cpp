@@ -74,6 +74,7 @@ LeggedRobotVisualizer::LeggedRobotVisualizer(PinocchioInterface pinocchioInterfa
 /******************************************************************************************************/
 void LeggedRobotVisualizer::launchVisualizerNode(ros::NodeHandle& nodeHandle) {
   costDesiredBasePositionPublisher_ = nodeHandle.advertise<visualization_msgs::Marker>("/legged_robot/desiredBaseTrajectory", 1);
+  pub_optimized_trajectory_ = nodeHandle.advertise<geometry_msgs::PoseArray>("/legged_robot/optimizedSdBaseTrajectory", 1);
   costDesiredFeetPositionPublishers_.resize(centroidalModelInfo_.numThreeDofContacts);
   costDesiredFeetPositionPublishers_[0] = nodeHandle.advertise<visualization_msgs::Marker>("/legged_robot/desiredFeetTrajectory/LF", 1);
   costDesiredFeetPositionPublishers_[1] = nodeHandle.advertise<visualization_msgs::Marker>("/legged_robot/desiredFeetTrajectory/RF", 1);
@@ -249,6 +250,7 @@ void LeggedRobotVisualizer::publishDesiredTrajectory(ros::Time timeStamp, const 
     const auto basePose = centroidal_model::getBasePose(state, centroidalModelInfo_);
     geometry_msgs::Pose pose;
     pose.position = getPointMsg(basePose.head<3>());
+    pose.orientation =  getOrientationMsg(getQuaternionFromEulerAnglesZyx<double>(basePose.tail<3>()));
 
     // Fill message containers
     desiredBasePositionMsg.push_back(pose.position);
@@ -298,7 +300,7 @@ void LeggedRobotVisualizer::publishOptimizedStateTrajectory(ros::Time timeStamp,
   // Reserve Com Msg
   std::vector<geometry_msgs::Point> mpcComPositionMsgs;
   mpcComPositionMsgs.reserve(mpcStateTrajectory.size());
-
+  geometry_msgs::PoseArray pose_array;
   // Extract Com and Feet from state
   std::for_each(mpcStateTrajectory.begin(), mpcStateTrajectory.end(), [&](const vector_t& state) {
     const auto basePose = centroidal_model::getBasePose(state, centroidalModelInfo_);
@@ -306,7 +308,9 @@ void LeggedRobotVisualizer::publishOptimizedStateTrajectory(ros::Time timeStamp,
     // Fill com position and pose msgs
     geometry_msgs::Pose pose;
     pose.position = getPointMsg(basePose.head<3>());
+    pose.orientation = getOrientationMsg(getQuaternionFromEulerAnglesZyx<double>(basePose.tail<3>()));
     mpcComPositionMsgs.push_back(pose.position);
+    pose_array.poses.emplace_back(pose);
 
     // Fill feet msgs
     const auto& model = pinocchioInterface_.getModel();
@@ -323,11 +327,12 @@ void LeggedRobotVisualizer::publishOptimizedStateTrajectory(ros::Time timeStamp,
 
   // Convert feet msgs to Array message
   visualization_msgs::MarkerArray markerArray;
+  
   markerArray.markers.reserve(centroidalModelInfo_.numThreeDofContacts +
                               2);  // 1 trajectory per foot + 1 for the future footholds + 1 for the com trajectory
   for (size_t i = 0; i < centroidalModelInfo_.numThreeDofContacts; i++) {
     markerArray.markers.emplace_back(getLineMsg(std::move(feetMsgs[i]), feetColorMap_[i], trajectoryLineWidth_));
-    markerArray.markers.back().ns = "EE Trajectories";
+    markerArray.markers.back().ns = "EE Trajectories"; 
   }
   markerArray.markers.emplace_back(getLineMsg(std::move(mpcComPositionMsgs), Color::red, trajectoryLineWidth_));
   markerArray.markers.back().ns = "CoM Trajectory";
@@ -368,9 +373,11 @@ void LeggedRobotVisualizer::publishOptimizedStateTrajectory(ros::Time timeStamp,
 
   // Add headers and Id
   assignHeader(markerArray.markers.begin(), markerArray.markers.end(), getHeaderMsg(frameId_, timeStamp));
+  pose_array.header = getHeaderMsg(frameId_, timeStamp);
   assignIncreasingId(markerArray.markers.begin(), markerArray.markers.end());
 
   stateOptimizedPublisher_.publish(markerArray);
+  pub_optimized_trajectory_.publish(pose_array);
 }
 
 }  // namespace legged_robot

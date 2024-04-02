@@ -99,7 +99,7 @@ CentroidalModelInfo createCentroidalModelInfo(const PinocchioInterface& interfac
   info.numSixDofContacts = sixDofContactNames.size();
   info.generalizedCoordinatesNum = model.nq;
   info.actuatedDofNum = info.generalizedCoordinatesNum - 6;
-  info.stateDim = info.generalizedCoordinatesNum + 6;
+  info.stateDim = info.generalizedCoordinatesNum + 6; // mark
   info.inputDim = info.actuatedDofNum + 3 * info.numThreeDofContacts + 6 * info.numSixDofContacts;
   info.robotMass = pinocchio::computeTotalMass(model);
 

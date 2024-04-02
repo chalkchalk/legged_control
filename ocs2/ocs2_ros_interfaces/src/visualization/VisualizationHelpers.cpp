@@ -74,6 +74,16 @@ geometry_msgs::Point getPointMsg(const Eigen::Vector3d& point) {
   return pointMsg;
 }
 
+geometry_msgs::Pose getPoseMsg(const Eigen::Vector3d& point, const Eigen::Quaterniond& orientation)
+{
+  geometry_msgs::Pose pose;
+  pose.position.x = point.x();
+  pose.position.y = point.y();
+  pose.position.z = point.z();
+  pose.orientation = getOrientationMsg(orientation);
+  return pose;
+}
+
 geometry_msgs::Vector3 getVectorMsg(const Eigen::Vector3d& vec) {
   geometry_msgs::Vector3 vecMsg;
   vecMsg.x = vec.x();

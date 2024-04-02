@@ -42,7 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <geometry_msgs/Vector3.h>
 #include <std_msgs/ColorRGBA.h>
 #include <visualization_msgs/Marker.h>
-
+#include <geometry_msgs/PoseArray.h>
 namespace ocs2 {
 
 std_msgs::ColorRGBA getColor(Color color, double alpha = 1.0);
@@ -72,6 +72,8 @@ visualization_msgs::Marker getLineMsg(std::vector<geometry_msgs::Point>&& points
 geometry_msgs::Point getPointMsg(const Eigen::Vector3d& point);
 
 geometry_msgs::Vector3 getVectorMsg(const Eigen::Vector3d& vec);
+
+geometry_msgs::Pose getPoseMsg(const Eigen::Vector3d& point, const Eigen::Quaterniond& orientation);
 
 geometry_msgs::Quaternion getOrientationMsg(const Eigen::Quaterniond& orientation);
 
