@@ -4,6 +4,7 @@ project(legged_unitree_description)
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED
         COMPONENTS
+        livox_laser_simulation
         )
 
 ###################################

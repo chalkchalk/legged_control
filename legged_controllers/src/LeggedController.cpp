@@ -107,6 +107,7 @@ namespace legged
 
   void LeggedController::update(const ros::Time &time, const ros::Duration &period)
   {
+    
     // State Estimate
     updateStateEstimation(time, period);
 
@@ -147,9 +148,10 @@ namespace legged
       hybridTorqueJointHandles_[j].setCommand(posDes(j), velDes(j), kp_, kd_, torque(j),
                                               0.0, 0.0, safetyChecker_->tau_max[0], safetyChecker_->tau_max[1], safetyChecker_->tau_max[2]);
     }
-
+    
     // Visualization
     robotVisualizer_->update(currentObservation_, mpcMrtInterface_->getPolicy(), mpcMrtInterface_->getCommand());
+    
     selfCollisionVisualization_->update(currentObservation_);
 
     // Publish the observation. Only needed for the command interface

@@ -131,7 +131,7 @@ void LeggedRobotVisualizer::publishObservation(ros::Time timeStamp, const System
   }
 
   // Publish
-  publishJointTransforms(timeStamp, qJoints);
+  // publishJointTransforms(timeStamp, qJoints);
   publishBaseTransform(timeStamp, basePose);
   publishCartesianMarkers(timeStamp, observation, feetPositions, feetForces);
 }

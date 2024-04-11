@@ -22,7 +22,20 @@
       <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rvizconfig)" output="screen" />
       </group>
 
-      <node if="$(arg cheater)" name="controller_loader" pkg="controller_manager" type="controller_manager"
+      <node if="$(arg cheater)" name="controller_loader" pkg="controller_manager" type="spawner"
+            output="screen" args="
+            controllers/legged_controller
+            controllers/legged_cheater_controller
+      "/>
+
+      <node unless="$(arg cheater)" name="controller_loader" pkg="controller_manager" type="spawner"
+            output="screen" args="
+            controllers/legged_controller
+      "/>
+
+
+
+      <!-- <node if="$(arg cheater)" name="controller_loader" pkg="controller_manager" type="controller_manager"
             output="screen" args="load
             controllers/joint_state_controller
             controllers/legged_controller
@@ -33,20 +46,8 @@
             output="screen" args="load
             controllers/joint_state_controller
             controllers/legged_controller
-      "/>
+      "/> -->
 
-
-      <node pkg="legged_controllers" type="call_controller.sh" name="call_controller"
-            output="screen"/>
-
-      
-            /root/catkin_ws/src/legged_control/legged_controllers/config/a1/real /reference.info
-
-<!-- 
-rosservice call /controller_manager/switch_controller "start_controllers: ['controllers/legged_controller']                   
-stop_controllers: ['']
-strictness: 0
-start_asap: false
-timeout: 0.0"  
--->
+      <!-- <node pkg="legged_controllers" type="call_controller.sh" name="call_controller"
+            output="screen"/> -->
 </launch>
