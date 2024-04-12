@@ -7,6 +7,8 @@
 
 #include <legged_hw/LeggedHW.h>
 
+// #define UNITREE_SDK_2
+
 #ifdef UNITREE_SDK_3_3_1
 #include "unitree_legged_sdk_3_3_1/safety.h"
 #include "unitree_legged_sdk_3_3_1/udp.h"

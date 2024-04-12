@@ -35,7 +35,13 @@
 // Created by qiayuan on 12/27/20.
 //
 
+#ifdef UNITREE_SDK_2
+#include "legged_unitree_hw/UnitreeHW_sdk2.h"
+#else
 #include "legged_unitree_hw/UnitreeHW.h"
+#endif
+
+
 
 #include <legged_hw/LeggedHWLoop.h>
 

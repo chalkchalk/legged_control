@@ -141,9 +141,9 @@ void LivoxPointsPlugin::OnNewLaserScans() {
             //   auto index = (verticalRayCount - verticle_index - 1) * rayCount + horizon_index;
                 auto range = rayShape->GetRange(pair.first);
                 auto intensity = rayShape->GetRetro(pair.first);
-                if (range >= RangeMax()) {
+                if (range >= maxDist) {
                     range = 0;
-                } else if (range <= RangeMin()) {
+                } else if (range <= minDist) {
                     range = 0;
                 }
                 //scan->set_ranges(index, range);
@@ -154,13 +154,17 @@ void LivoxPointsPlugin::OnNewLaserScans() {
                 ray.Euler(ignition::math::Vector3d(0.0, rotate_info.zenith, rotate_info.azimuth));
                 //                auto axis = rotate * ray * ignition::math::Vector3d(1.0, 0.0, 0.0);
                 //                auto point = range * axis + world_pose.Pos();//转换成世界坐标系
-
-                auto axis = ray * ignition::math::Vector3d(1.0, 0.0, 0.0);
-                auto point = (range + RangeMin()) * axis;
-                scan_points.emplace_back();
-                scan_points.back().x = point.X();
-                scan_points.back().y = point.Y();
-                scan_points.back().z = point.Z();
+                if(range > 0)
+                {
+                    auto axis = ray * ignition::math::Vector3d(1.0, 0.0, 0.0);
+                    auto point = (range + minDist) * axis;
+                    // std::cout << range << std::endl;
+                    scan_points.emplace_back();
+                    scan_points.back().x = point.X();
+                    scan_points.back().y = point.Y();
+                    scan_points.back().z = point.Z();
+                }   
+                
             //} else {
 
             //    //                ROS_INFO_STREAM("count is wrong:" << verticle_index << "," << verticalRayCount << ","
@@ -215,7 +219,7 @@ void LivoxPointsPlugin::InitializeScan(msgs::LaserScan *&scan) {
     scan->set_vertical_count(VerticalRangeCount());
 
     scan->set_range_min(RangeMin());
-    scan->set_range_max(RangeMax());
+    scan->set_range_max(maxDist);
 
     scan->clear_ranges();
     scan->clear_intensities();
@@ -254,7 +258,7 @@ double LivoxPointsPlugin::RangeMin() const {
         return -1;
 }
 
-double LivoxPointsPlugin::GetRangeMax() const { return RangeMax(); }
+double LivoxPointsPlugin::GetRangeMax() const { return maxDist; }
 
 double LivoxPointsPlugin::RangeMax() const {
     if (rayShape)

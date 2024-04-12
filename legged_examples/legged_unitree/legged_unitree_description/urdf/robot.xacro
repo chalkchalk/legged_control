@@ -40,7 +40,7 @@
 
     <xacro:IMU connected_to="base" imu_name="imu_link" xyz="0. 0. 0." rpy="0. 0. 0."/>
 
-    <xacro:Livox_Mid40 connected_to="base" name="livox" xyz="0.29 0.0 -0.07" rpy="0. -0.15 0."/>
+    <xacro:Livox_Mid40 connected_to="base" name="livox" xyz="0.29 0.0 -0.07" rpy="0. 2.87 0."/>
 
 
     <xacro:leg prefix="LF" mesh_path="${mesh_path}" mirror="1" mirror_dae="True" front_hind="1" front_hind_dae="True">

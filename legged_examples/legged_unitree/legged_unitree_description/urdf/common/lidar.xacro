@@ -39,7 +39,7 @@
 				<!-- <min_angle>${-7.22/180*M_PI}</min_angle>
 				<max_angle>${55.22/180*M_PI}</max_angle> -->
         <min_angle>${-7.22/180*M_PI}</min_angle>
-				<max_angle>${85.22/180*M_PI}</max_angle>
+				<max_angle>${55.22/180*M_PI}</max_angle>
 				</vertical>
 			  </scan>
 			  <range>
