@@ -178,7 +178,7 @@ namespace legged
     }
     for (size_t i = 0; i < contacts.size(); ++i)
     {
-      contactFlag[i] = contactHandles_[i].get_contact_forces() > 10.0;
+      contactFlag[i] = contactHandles_[i].get_contact_forces() > 10.0; // TODO set param for contact
     }
     for (size_t i = 0; i < 4; ++i)
     {

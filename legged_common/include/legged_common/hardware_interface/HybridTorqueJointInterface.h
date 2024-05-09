@@ -43,8 +43,8 @@ class HybridTorqueJointHandle : public HybridJointHandle {
       pd_motor_.d_max_ = d_max;
       double torque = pd_motor_.get_torque(getPosition(), getVelocity(), pos_des, vel_des, ff);
       setFeedforward(torque);
-      // if(getName() == "RF_KFE")
-      //   std::cout << "A:"<< torque << ", " << pd_motor_.kp_ << ", " << pd_motor_.kd_ << ", " << pos_des << ", " << vel_des << std::endl;
+      if(getName() == "RF_KFE")
+        std::cout << "A:"<< torque << ", " << pd_motor_.kp_ << ", " << pd_motor_.kd_ << ", " << pos_des << ", " << vel_des << std::endl;
       
     }
     

@@ -11,4 +11,16 @@
 
     <param name="robot_type" value="$(arg robot_type)"/>
     <include file="$(find legged_unitree_hw)/launch/$(arg robot_type).launch"/>
+
+    <rosparam file="$(find legged_controllers)/config/controllers.yaml" command="load"/>
+     
+    <node  name="controller_spawner" pkg="controller_manager" type="spawner"
+            output="screen" args="
+            controllers/joint_state_controller
+    "/>
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <remap from="robot_description" to="legged_robot_description"/>
+        <param name="publish_frequency" value="1000" />
+    </node>
 </launch>

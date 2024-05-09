@@ -23,6 +23,15 @@ set(BUILD_SHARED_LIBS ON CACHE STRING "Build shared libraries" FORCE)
 set(TARGET X64_AUTOMATIC CACHE STRING "Target architecture" FORCE)
 set(BLASFEO_EXAMPLES OFF CACHE BOOL "Examples enabled")
 
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+set(BLASFEO_TARGET "GENERIC")
+elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+set(BLASFEO_TARGET "ARMV8A_ARM_CORTEX_A57")
+else()
+    message("Unknown architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+endif()
+
+
 # Download & build source
 FetchContent_Declare(blasfeoDownload
 	GIT_REPOSITORY https://github.com/giaf/blasfeo
@@ -30,7 +39,9 @@ FetchContent_Declare(blasfeoDownload
 	UPDATE_COMMAND ""
 	SOURCE_DIR ${BLASFEO_DOWNLOAD_DIR}
 	BINARY_DIR ${BLASFEO_BUILD_DIR}
-	BUILD_COMMAND $(MAKE)
+	BUILD_COMMAND 
+	COMMAND sed -i 59s/GENERIC/${BLASFEO_TARGET}/ ${BLASFEO_DOWNLOAD_DIR}/CMakeLists.txt
+	COMMAND cd ${BLASFEO_DOWNLOAD_DIR} && cmake . && make . && sudo make install
 	INSTALL_COMMAND "$(MAKE) install"
 )
 FetchContent_MakeAvailable(blasfeoDownload)

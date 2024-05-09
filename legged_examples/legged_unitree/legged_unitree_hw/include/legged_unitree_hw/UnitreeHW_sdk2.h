@@ -1,8 +1,17 @@
 #pragma once
 
 #include <legged_hw/LeggedHW.h>
+#include <unitree_legged_sdk2/robot/channel/channel_publisher.hpp>
+#include <unitree_legged_sdk2/robot/channel/channel_subscriber.hpp>
+#include <unitree_legged_sdk2/idl/go2/LowState_.hpp>
+#include <unitree_legged_sdk2/idl/go2/LowCmd_.hpp>
+#include <unitree_legged_sdk2/robot/go2/robot_state/robot_state_client.hpp>
+#include <unitree_legged_sdk2/common/thread/thread.hpp>
+#include <unitree_legged_sdk2/common/gamepad.hpp>
 
-
+using namespace unitree::common;
+using namespace unitree::robot;
+using namespace unitree::robot::go2;
 
 namespace legged {
 const std::vector<std::string> CONTACT_SENSOR_NAMES = {"RF_FOOT", "LF_FOOT", "RH_FOOT", "LH_FOOT"};
@@ -58,18 +67,27 @@ class UnitreeHW : public LeggedHW {
   void updateJoystick(const ros::Time& time);
 
  private:
+  void InitLowCmd();
   bool setupJoints();
+
+  void LowStateMessageHandler(const void* message);
 
   bool setupImu();
 
   bool setupContactSensor(ros::NodeHandle& nh);
 
+  ChannelPublisherPtr<unitree_go::msg::dds_::LowCmd_> lowcmd_publisher;
+  /*subscriber*/
+  ChannelSubscriberPtr<unitree_go::msg::dds_::LowState_> lowstate_subscriber;
 
   UnitreeMotorData jointData_[12]{};  // NOLINT(modernize-avoid-c-arrays)
   UnitreeImuData imuData_{};
+  unitree_go::msg::dds_::LowCmd_ low_cmd{};      // default init
+  unitree_go::msg::dds_::LowState_ low_state{};  // default init
   double contact_force_[4]{};  // NOLINT(modernize-avoid-c-arrays)
+  /*LowCmd write thread*/
+  ThreadPtr lowCmdWriteThreadPtr;
 
-  int powerLimit_{};
   int contact_offset_[4]{};
   ros::Publisher joyPublisher_;
   ros::Time lastPub_;

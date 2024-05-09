@@ -6,6 +6,9 @@ list(APPEND OCS2_CXX_FLAGS
   "-pthread"
   "-Wfatal-errors"
   "-Wl,--no-as-needed"
+  # "-march=armv8-a"
+  "-march=native"
+  "-mtune=native"
   )
 
 # Force Boost dynamic linking

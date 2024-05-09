@@ -34,6 +34,16 @@ set(BLASFEO_INCLUDE_DIR ${BLASFEO_PATH}/include CACHE STRING "Path to BLASFEO he
 set(BUILD_SHARED_LIBS ON CACHE STRING "Build shared libraries" FORCE)
 set(HPIPM_TESTING OFF CACHE BOOL "Examples enabled")
 
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+set(HPIPM_TARGET "AVX")
+elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+set(HPIPM_TARGET "GENERIC")
+else()
+    message("Unknown architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+endif()
+
+
+
 # Download & build source
 FetchContent_Declare(hpipmDownload
   GIT_REPOSITORY https://github.com/giaf/hpipm
@@ -41,7 +51,9 @@ FetchContent_Declare(hpipmDownload
   UPDATE_COMMAND ""
   SOURCE_DIR ${HPIPM_DOWNLOAD_DIR}
   BINARY_DIR ${HPIPM_BUILD_DIR}
-  BUILD_COMMAND $(MAKE)
+  BUILD_COMMAND 
+  COMMAND sed -i 48s/AVX/${HPIPM_TARGET}/ ${HPIPM_DOWNLOAD_DIR}/CMakeLists.txt
+  COMMAND cd ${HPIPM_DOWNLOAD_DIR} && cmake . && cmake . && make . && sudo make install
   INSTALL_COMMAND "$(MAKE) install"
   )
 FetchContent_MakeAvailable(hpipmDownload)

@@ -9,7 +9,6 @@
 
     <!-- buildtool_depend: dependencies of the build process -->
     <buildtool_depend>catkin</buildtool_depend>
-    <build_depend>livox_laser_simulation</build_depend>
     
     <exec_depend>xacro</exec_depend>
     <exec_depend>joint_state_publisher</exec_depend>

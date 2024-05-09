@@ -27,7 +27,7 @@ include_directories(
 )
 include_directories(/usr/local/include/ddscxx /usr/local/include/iceoryx/v2.0.2)
 
-link_directories(lib)
+link_directories(lib/unitree_legged_sdk)
 link_libraries(unitree_sdk2 ddsc ddscxx rt pthread)
 
 set(SOURCE src/legged_unitree_hw.cpp src/UnitreeHW_sdk2.cpp)
@@ -39,21 +39,25 @@ add_executable(${PROJECT_NAME}_3_3_1
 
 target_compile_definitions(${PROJECT_NAME}_3_3_1 PRIVATE UNITREE_SDK_3_3_1)
 
-target_link_libraries(${PROJECT_NAME}_3_3_1
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+    message("Detected x86_64 (amd64) architecture")
+    link_directories(lib/unitree_legged_sdk2/x86_64)
+    target_link_libraries(${PROJECT_NAME}_3_3_1
         ${catkin_LIBRARIES}
         libunitree_legged_sdk_amd64_3_3_1.so lcm
         )
-
-add_executable(${PROJECT_NAME}_3_8_0
-        ${SOURCE}
-)
-
-target_compile_definitions(${PROJECT_NAME}_3_8_0 PRIVATE UNITREE_SDK_3_8_0)
-
-target_link_libraries(${PROJECT_NAME}_3_8_0
+elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+    message("Detected ARM64 architecture")
+    link_directories(lib/unitree_legged_sdk2/aarch64)
+    target_link_libraries(${PROJECT_NAME}_3_3_1
         ${catkin_LIBRARIES}
-        libunitree_legged_sdk_amd64_3_8_0.a
-)
+        libunitree_legged_sdk_arm64_3_3_1.so lcm
+        )
+else()
+    message("Unknown architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+endif()
+
+
 
 add_executable(${PROJECT_NAME}_2
         ${SOURCE_SDK2}
@@ -61,10 +65,24 @@ add_executable(${PROJECT_NAME}_2
 
 target_compile_definitions(${PROJECT_NAME}_2 PRIVATE UNITREE_SDK_2)
 
-target_link_libraries(${PROJECT_NAME}_2
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+    message("Detected x86_64 (amd64) architecture")
+    target_link_libraries(${PROJECT_NAME}_2
         ${catkin_LIBRARIES}
         libunitree_sdk2.a
-)
+        )
+elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+    message("Detected ARM64 architecture")
+    target_link_libraries(${PROJECT_NAME}_2
+        ${catkin_LIBRARIES}
+        libunitree_sdk2.a
+        )
+else()
+    message("Unknown architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+endif()
+
+
+
 
 #########################
 ###   CLANG TOOLING   ###
@@ -73,7 +91,7 @@ find_package(cmake_clang_tools QUIET)
 if (cmake_clang_tools_FOUND)
     message(STATUS "Run clang tooling for target " ${PROJECT_NAME})
     add_clang_tooling(
-            TARGETS ${PROJECT_NAME}_3_3_1 TARGETS ${PROJECT_NAME}_3_8_0
+            TARGETS ${PROJECT_NAME}_3_3_1 TARGETS ${PROJECT_NAME}_2
             SOURCE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/include/legged_unitree_hw
             CT_HEADER_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include/legged_unitree_hw
             CF_WERROR
@@ -86,14 +104,14 @@ endif (cmake_clang_tools_FOUND)
 #############
 
 # Mark executables and/or libraries for installation
-install(TARGETS ${PROJECT_NAME}_3_3_1 ${PROJECT_NAME}_3_8_0  # ${PROJECT_NAME}_2
+install(TARGETS ${PROJECT_NAME}_3_3_1 ${PROJECT_NAME}_2
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
         )
 
 # Mark cpp header files for installation
-install(DIRECTORY include/${PROJECT_NAME}_3_3_1/ include/${PROJECT_NAME}_3_8_0/ # include/${PROJECT_NAME}_2/ 
+install(DIRECTORY include/${PROJECT_NAME}_3_3_1/ include/${PROJECT_NAME}_2/ 
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
         FILES_MATCHING PATTERN "*.h"
         )

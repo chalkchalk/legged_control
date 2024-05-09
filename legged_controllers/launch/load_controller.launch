@@ -7,7 +7,7 @@
       <arg name="rviz"                default="true"/>
       <arg name="urdfFile"            default="/tmp/legged_control/$(arg robot_type).urdf"/>
       <arg name="description_name"    default="legged_robot_description"/>
-      <arg name="env"                 default="simulation"/>
+      <arg name="env"                 default="real"/>
 
       <!-- make the files into global parameters -->
       <param name="urdfFile" value="$(arg urdfFile)"/>

@@ -74,12 +74,11 @@ void TargetTrajectoriesKeyboardPublisher::publishKeyboardCommand(const std::stri
       std::lock_guard<std::mutex> lock(latestObservationMutex_);
       observation = latestObservation_;
     }
-
     // get TargetTrajectories
     const auto targetTrajectories = commandLineToTargetTrajectoriesFun_(commandLineInput, observation);
-
     // publish TargetTrajectories
     targetTrajectoriesPublisherPtr_->publishTargetTrajectories(targetTrajectories);
+
   }  // end of while loop
 }
 

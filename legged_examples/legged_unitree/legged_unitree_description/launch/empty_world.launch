@@ -15,10 +15,7 @@
     <!-- push robot_description to factory and spawn robot in gazebo -->
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" clear_params="true"
           args="-z 0.2 -param legged_robot_description -urdf -model $(arg robot_type)" output="screen"/>
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-        <remap from="robot_description" to="legged_robot_description"/>
-        <param name="publish_frequency" value="1000" />
-    </node>
+    
 
     <rosparam file="$(find legged_controllers)/config/controllers.yaml" command="load"/>
      
@@ -26,6 +23,11 @@
             output="screen" args="
             controllers/joint_state_controller
     "/>
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <remap from="robot_description" to="legged_robot_description"/>
+        <param name="publish_frequency" value="1000" />
+    </node>
 
     <!-- <node pkg="controller_manager" type="spawner" name="controller_spawner" respawn="false"
             output="screen" ns="/$(arg robot_type)_gazebo" args="joint_state_controller"/> -->
